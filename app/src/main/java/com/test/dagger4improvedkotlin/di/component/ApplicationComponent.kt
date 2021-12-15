@@ -12,6 +12,7 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun trigger(myApp: MyApp)
 
+
     fun netWorkServiceProvider():NetworkService
     fun databaseProvider(): DatabaseService
 

@@ -1,25 +1,38 @@
 package com.test.dagger4improvedkotlin.di.module
 
+import android.content.Context
 import com.test.dagger4improvedkotlin.MyApp
-import com.test.dagger4improvedkotlin.data.local.DatabaseService
-import com.test.dagger4improvedkotlin.data.remote.NetworkService
+import com.test.dagger4improvedkotlin.di.qualifier.NetworkInfo
+import com.test.dagger4improvedkotlin.di.qualifier.ApplicationContext
+import com.test.dagger4improvedkotlin.di.qualifier.DatabaseInfo
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class ApplicationModule(private val application: MyApp) {
 
-    @Singleton
+    @ApplicationContext
     @Provides
-    fun databaseService() : DatabaseService{
-        return DatabaseService(application, "SampleDatabase", 1)
+    fun contextProvider(): Context{
+        return application
     }
 
-    @Singleton
+    @DatabaseInfo
     @Provides
-    fun networkService(): NetworkService {
-        return NetworkService(application, "SampleNetworkServiceKey")
+    fun databaseNameProvider(): String {
+        return "SampleDatabase"
+    }
+
+    @NetworkInfo
+    @Provides
+    fun apiKeyProvider(): String {
+        return "SampleNetworkKey"
+    }
+
+    @DatabaseInfo
+    @Provides
+    fun databaseVersionProvider(): Int {
+        return 1
     }
 
 }
